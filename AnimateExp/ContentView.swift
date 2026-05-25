@@ -9,24 +9,22 @@ import SwiftUI
 
 struct ContentView: View {
     @State private var scaleValue: Double = 1
+    @State private var opacityValue: Double = 1
+    @State private var color: Color = .blue
     var body: some View {
         VStack {
             Circle()
-                .fill(Color.blue)
+                .fill(color)
                 .frame(width: 200, height: 200)
                 .scaleEffect(scaleValue)
-                .animation(.spring(response: 0.3, dampingFraction: 0.5), value: scaleValue)
-                .onTapGesture {
-                    springBounce()
-                }
+                .opacity(opacityValue)
+                .animation(.easeInOut(duration: 1.8).repeatForever(autoreverses: true), value: scaleValue)
         }
         .padding()
-    }
-    private func springBounce() {
-        scaleValue = 0.6
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-            scaleValue = 1
+        .onAppear{
+            scaleValue = 1.2
+            opacityValue = 0.6
+            color = .indigo
         }
     }
 }
